@@ -1,9 +1,9 @@
-package com.backgammon.game.client;
+package com.backgammon.controllers.client;
 
+import com.backgammon.controllers.Backgammon;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.backgammon.game.Backgammon;
 
 public class HtmlLauncher extends GwtApplication {
 

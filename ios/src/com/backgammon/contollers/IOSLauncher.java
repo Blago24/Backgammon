@@ -1,11 +1,11 @@
-package com.backgammon.game;
+package com.backgammon.contollers;
 
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
-import com.backgammon.game.Backgammon;
+import com.backgammon.controllers.Backgammon;
 
 public class IOSLauncher extends IOSApplication.Delegate {
     @Override

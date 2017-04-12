@@ -1,8 +1,8 @@
-package com.backgammon.game.desktop;
-
+package com.backgammon.controllers.desktop;
+import com.backgammon.controllers.Backgammon;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.backgammon.game.Backgammon;
+
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

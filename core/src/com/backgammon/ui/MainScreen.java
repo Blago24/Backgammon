@@ -1,6 +1,6 @@
-package screens;
+package com.backgammon.ui;
 
-import com.backgammon.game.Backgammon;
+import com.backgammon.controllers.Backgammon;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;

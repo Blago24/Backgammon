@@ -1,8 +1,8 @@
-package com.backgammon.game;
+package com.backgammon.controllers;
 import com.badlogic.gdx.Game;
 
 
-import screens.MainScreen;
+import com.backgammon.ui.MainScreen;
 
 public class Backgammon extends Game {
 	public static final String GAME_NAME = "Backgammon";

@@ -1,4 +1,4 @@
-package com.backgammon.pieces;
+package com.backgammon.models;
 
 public class Checkers {
 
