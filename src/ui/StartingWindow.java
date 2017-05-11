@@ -57,6 +57,7 @@ public class StartingWindow {
 				Bord gameBord = new Bord();
 				gameBord.iniBord();
 				gameBord.show();
+				gameBord.showColor();
 			}
 
 		});

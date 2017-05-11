@@ -30,7 +30,21 @@ public class Bord {
 	 for (int i = 0; i < pieces.length; i++) {
 		for (int j = 0; j < pieces[0].length; j++) {
 			System.out.print(" "+pieces[i][j].size());
-			//System.out.println(" "+pieces[i][j].get(0).getColor());
+					
+		}
+		System.out.println();
+	}
+ }
+ public void showColor(){
+	 for (int i = 0; i < pieces.length; i++) {
+		for (int j = 0; j < pieces[0].length; j++) {
+			
+			if(pieces[i][j].size()!=0){
+				System.out.print(this.pieces[i][j].get(0).getColor());
+			}else{
+				System.out.print("*");
+			}
+			
 		}
 		System.out.println();
 	}
@@ -69,10 +83,12 @@ public class Bord {
 		switch (col) {
 		case 0:
 		case 9:
+			//System.out.println("white");
 			fillColWithWhitePieces(TopRow, col, numberOfPieces);
 			break;
 		case 3:
 		case 5:
+			//System.out.println("black");
 			fillColWithBlackPieces(TopRow, col, numberOfPieces);
 			break;
 		}
@@ -81,13 +97,13 @@ public class Bord {
 
 	private void fillColWithBlackPieces(int row, int col, int numberOfPieces) {
 		for (int i = 0; i < numberOfPieces; i++) {
-			pieces[row][col].add(new Piece(BlackPiece));
+			this.pieces[row][col].add(new Piece(BlackPiece));
 		}
 	}
 
 	private void fillColWithWhitePieces(int row, int col, int numberOfPieces) {
 		for (int i = 0; i < numberOfPieces; i++) {
-			pieces[row][col].add(new Piece(WhitePiece));
+			this.pieces[row][col].add(new Piece(WhitePiece));
 		}
 	}
 
@@ -95,10 +111,12 @@ public class Bord {
 		switch (col) {
 		case 0:
 		case 9:
+			//System.out.println("black");
 			fillColWithBlackPieces(BotRow, col, numberOfPieces);
 			break;
 		case 3:
 		case 5:
+			//System.out.println("white");
 			fillColWithWhitePieces(BotRow, col, numberOfPieces);
 			break;
 		}
