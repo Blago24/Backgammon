@@ -49,6 +49,10 @@ public class Bord {
 		System.out.println();
 	}
  }
+	public ArrayList<Piece>[][] getPieces() {
+	return pieces;
+}
+
 	public void iniBord() {
 		for (int row = 0; row < pieces.length; row++) {
 			for (int col = 0; col < pieces[0].length; col++) {

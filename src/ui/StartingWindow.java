@@ -58,6 +58,10 @@ public class StartingWindow {
 				gameBord.iniBord();
 				gameBord.show();
 				gameBord.showColor();
+				frame.dispose();
+					MainWindow mainWindow = new MainWindow(gameBord);
+					mainWindow.getFrame().setVisible(true);
+				
 			}
 
 		});
