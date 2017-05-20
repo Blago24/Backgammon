@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import com.sun.java.swing.plaf.windows.resources.windows;
+
 import models.Bord;
 
 import javax.swing.JButton;
@@ -59,7 +61,10 @@ public class StartingWindow {
 				gameBord.show();
 				gameBord.showColor();
 				frame.dispose();
-					MainWindow mainWindow = new MainWindow(gameBord);
+					MainWindow mainWindow = new MainWindow();
+					mainWindow.setBord(gameBord);
+					mainWindow.setMainWindow(mainWindow);
+					mainWindow.runTheGame();
 					mainWindow.getFrame().setVisible(true);
 				
 			}

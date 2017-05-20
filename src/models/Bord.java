@@ -2,13 +2,15 @@ package models;
 
 import java.util.ArrayList;
 
+import ui.MainWindow;
+
 public class Bord {
-	final static int bordRows = 2;
-	final static int bordCols = 12;
+	public final static int bordRows = 2;
+	public final static int bordCols = 12;
 	final static int BlackPiece = 0;
 	final static int WhitePiece = 1;
-	final static int TopRow = 0;
-	final static int BotRow = 1;
+	public final static int TopRow = 0;
+	public final static int BotRow = 1;
 	// one piece , two pieces , three pieces , four and five
 	final static int[] topRowYPositions = { -275, -206, -137, -69, 1 };
 	final static int botRowYPosition = 345;
@@ -58,6 +60,23 @@ public class Bord {
 
 			}
 			System.out.println();
+		}
+	}
+	public void showBord(MainWindow window) {
+		int sizeOfCurrentPosition;
+		boolean isItWhite;
+		for (int row = 0; row < 2; row++) {
+			for (int col = 0; col < 12; col++) {
+				
+				sizeOfCurrentPosition =checkTheNumberOfPiecesOnCurrentPosition(row, col);
+				System.out.println(sizeOfCurrentPosition);
+				if(sizeOfCurrentPosition>0){
+					isItWhite =checkIfTheColorOfPiecesOnCurrentPositionIsWhite(row, col);
+					window.showPictureForCurrentPosition(row, col, sizeOfCurrentPosition, isItWhite);
+				}
+				
+
+			}
 		}
 	}
 
@@ -144,7 +163,7 @@ public class Bord {
 		return pieces[row][col].size();
 	}
 
-	public boolean checkTheColorOfPiecesOnCurrentPosition(int row, int col) {
+	public boolean checkIfTheColorOfPiecesOnCurrentPositionIsWhite(int row, int col) {
 		if (pieces[row][col].get(0).getColor() == WhitePiece) {
 			return true;
 		}
