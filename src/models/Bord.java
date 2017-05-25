@@ -7,10 +7,12 @@ import ui.MainWindow;
 public class Bord {
 	public final static int bordRows = 2;
 	public final static int bordCols = 12;
-	final static int BlackPiece = 0;
-	final static int WhitePiece = 1;
+	public final static int BlackPiece = 0;
+	public final static int WhitePiece = 1;
 	public final static int TopRow = 0;
 	public final static int BotRow = 1;
+	public int counterWhitePieces;
+	public int counterBlackPieces;
 	// one piece , two pieces , three pieces , four and five
 	final static int[] topRowYPositions = { -275, -206, -137, -69, 1 };
 	final static int botRowYPosition = 345;
@@ -25,6 +27,8 @@ public class Bord {
 	ArrayList<Piece>[][] pieces = new ArrayList[bordRows][bordCols];;
 
 	public Bord() {
+		this.counterBlackPieces=15;
+		this.counterWhitePieces=15;
 		createTheArray();
 
 	}
@@ -62,22 +66,54 @@ public class Bord {
 			System.out.println();
 		}
 	}
+
+	public void countPieces() {
+		int currentCounterWhitePieces=0;
+		int currentCounterBlackPieces=0;
+		for (int row = 0; row < pieces.length; row++) {
+			for (int col = 0; col < pieces[0].length; col++) {
+				
+				if (pieces[row][col].size() != 0) {
+					if(this.pieces[row][col].get(0).getColor()==WhitePiece){
+						currentCounterWhitePieces+=pieces[row][col].size();
+					}else{
+						currentCounterBlackPieces+=pieces[row][col].size();
+					}
+				} 
+
+				
+			}
+		}
+		this.counterWhitePieces=currentCounterWhitePieces;
+		this.counterBlackPieces=currentCounterBlackPieces;
+	}
+
+	
+
 	public void showBord(MainWindow window) {
+		
+		window.getFrame().getContentPane().removeAll();
+		window.setAllButtons();
+		
+	
+		
 		int sizeOfCurrentPosition;
 		boolean isItWhite;
 		for (int row = 0; row < 2; row++) {
 			for (int col = 0; col < 12; col++) {
-				
-				sizeOfCurrentPosition =checkTheNumberOfPiecesOnCurrentPosition(row, col);
+
+				sizeOfCurrentPosition = checkTheNumberOfPiecesOnCurrentPosition(row, col);
 				System.out.println(sizeOfCurrentPosition);
-				if(sizeOfCurrentPosition>0){
-					isItWhite =checkIfTheColorOfPiecesOnCurrentPositionIsWhite(row, col);
+				if (sizeOfCurrentPosition > 0) {
+					isItWhite = checkIfTheColorOfPiecesOnCurrentPositionIsWhite(row, col);
 					window.showPictureForCurrentPosition(row, col, sizeOfCurrentPosition, isItWhite);
 				}
-				
 
 			}
 		}
+		window.setBackground();
+		
+
 	}
 
 	public ArrayList<Piece>[][] getPieces() {
@@ -159,7 +195,7 @@ public class Bord {
 	}
 
 	public int checkTheNumberOfPiecesOnCurrentPosition(int row, int col) {
-
+		System.out.println("SIZE=" + pieces[row][col].size());
 		return pieces[row][col].size();
 	}
 
@@ -175,12 +211,12 @@ public class Bord {
 		if (row == BotRow) {
 			return botRowYPosition;
 		} else {
-			if(sizeOfCurrentPosition>5){
-				return topRowYPositions[topRowYPositions.length-1];
-			}else{
-				return topRowYPositions[sizeOfCurrentPosition-1];
+			if (sizeOfCurrentPosition > 5) {
+				return topRowYPositions[topRowYPositions.length - 1];
+			} else {
+				return topRowYPositions[sizeOfCurrentPosition - 1];
 			}
-			
+
 		}
 
 	}
@@ -188,6 +224,22 @@ public class Bord {
 	public int getXPosition(int col, int counterForPics) {
 		// counterForPics*4 is for the shift
 		return getRowXposition(col) + counterForPics * 4;
+	}
+
+	public void removeOnePiece(int row, int col) {
+		System.out.println("da");
+		System.out.println(pieces[row][col].size());
+
+		pieces[row][col].remove(0);
+		System.out.println(pieces[row][col].size());
+
+	}
+	public int getCounterWhitePieces() {
+		return counterWhitePieces;
+	}
+
+	public int getCounterBlackPieces() {
+		return counterBlackPieces;
 	}
 
 }

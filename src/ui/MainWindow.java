@@ -11,6 +11,7 @@ import logic.GameEngine;
 import models.Bord;
 
 import java.awt.Color;
+import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,9 +32,9 @@ public class MainWindow {
 
 	private JLabel background = null;
 	private JTextField firstDice;
-	
+
 	private JTextField secondDice;
-	
+	private JButton btnTrow;
 	private JButton topOne;
 	private JButton topTwo;
 	private JButton topThree;
@@ -72,8 +73,9 @@ public class MainWindow {
 	 * Create the application.
 	 */
 	public void runTheGame() {
+
 		engine.gameRunning(this.bord);
-		setBackground();
+		// setBackground();
 
 	}
 
@@ -82,12 +84,20 @@ public class MainWindow {
 
 	}
 
+	public boolean areThereAnyPics() {
+		if (currentPiece == null) {
+			return false;
+		}
+		return true;
+
+	}
+
 	public void setBackground() {
 		frame.getContentPane().add(background);
 	}
 
 	public void setMainWindow(MainWindow window) {
-		engine.setWindow(window);
+		engine.setWindow(this);
 	}
 
 	public void setBord(Bord bord) {
@@ -96,9 +106,9 @@ public class MainWindow {
 
 	public void showPictureForCurrentPosition(int row, int col, int sizeOfCurrentPosition, boolean isItWhite) {
 		int numberOfPictures = numberOfPicturesAtCurrentPosition(sizeOfCurrentPosition);
-
+		System.out.println("NUMBER=====");
 		for (int counterForPics = 0; counterForPics < numberOfPictures; counterForPics++) {
-
+			System.out.println("NUMBER=" + sizeOfCurrentPosition);
 			if (isItWhite == true) {
 				chooseWhitePiecesPicture(row, col, sizeOfCurrentPosition, counterForPics);
 			} else {
@@ -204,7 +214,26 @@ public class MainWindow {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	public void removePictures() {
+		frame.getContentPane().remove(currentPiece);
+	}
+
+	public void setDice(boolean type) {
+		if (type == true) {
+
+			firstDice.setVisible(true);
+			secondDice.setVisible(true);
+			btnTrow.setVisible(true);
+
+		} else {
+			firstDice.setVisible(false);
+			secondDice.setVisible(false);
+			btnTrow.setVisible(false);
+		}
+	}
+
 	private void initialize() {
+
 		engine = new GameEngine();
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.PINK);
@@ -215,48 +244,61 @@ public class MainWindow {
 		background.setText("");
 		background.setBounds(0, 0, 910, 690);
 
-		frame.getContentPane().add(background);
+		// frame.getContentPane().add(background);
+		setAllButtons();
 
+		frame.setBounds(200, 200, 909, 730);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	}
+
+	public void setAllButtons() {
 		firstDice = new JTextField();
 		firstDice.setEditable(false);
 		firstDice.setBounds(91, 302, 86, 20);
+
 		frame.getContentPane().add(firstDice);
 		firstDice.setColumns(10);
 
-		JButton btnTrow = new JButton("trow");
+		btnTrow = new JButton("trow");
+		btnTrow.setBounds(272, 301, 89, 23);
 		btnTrow.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int points = engine.trowDice();
-
+				engine.setFirstDice(points);
 				firstDice.setText(points + "");
+				points = engine.trowDice();
+				engine.setSecondDice(points);
+				secondDice.setText(points + "");
+				
 			}
 		});
-		btnTrow.setBounds(272, 301, 89, 23);
+
 		frame.getContentPane().add(btnTrow);
 
-		
 		secondDice = new JTextField();
 		secondDice.setEditable(false);
 		secondDice.setBounds(178, 302, 86, 20);
-		// myFirstDice.setVisible(false);
 		frame.getContentPane().add(secondDice);
 		secondDice.setColumns(10);
-
-		
 
 		topOne = new JButton("");
 		topOne.setBounds(0, 0, 69, 255);
 		topOne.setOpaque(false);
 		topOne.setContentAreaFilled(false);
 		topOne.setBorderPainted(false);
+		// topOne.setBackground(Color.GREEN);
 		topOne.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("1");			}
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(0);
+				engine.makeTurn(bord);
+			}
 		});
 		frame.getContentPane().add(topOne);
-		
+
 		topTwo = new JButton("");
 		topTwo.setBounds(76, 0, 69, 255);
 		topTwo.setOpaque(false);
@@ -265,7 +307,9 @@ public class MainWindow {
 		topTwo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("2");
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(1);
+				engine.makeTurn(bord);
 			}
 		});
 		frame.getContentPane().add(topTwo);
@@ -275,10 +319,14 @@ public class MainWindow {
 		topThree.setOpaque(false);
 		topThree.setContentAreaFilled(false);
 		topThree.setBorderPainted(false);
+
 		topThree.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("3");			}
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(2);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(topThree);
@@ -291,7 +339,10 @@ public class MainWindow {
 		topFour.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("4");			}
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(3);
+				engine.makeTurn(bord);
+			}
 		});
 		topFour.setBounds(221, 0, 69, 255);
 		frame.getContentPane().add(topFour);
@@ -304,7 +355,10 @@ public class MainWindow {
 		topFive.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("5");			}
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(4);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(topFive);
@@ -317,7 +371,11 @@ public class MainWindow {
 		topSix.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("6");			}
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(5);
+				engine.makeTurn(bord);
+				
+			}
 		});
 
 		frame.getContentPane().add(topSix);
@@ -330,7 +388,10 @@ public class MainWindow {
 		topSeven.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("7");			}
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(6);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(topSeven);
@@ -343,7 +404,10 @@ public class MainWindow {
 		topEight.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("8");			}
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(7);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(topEight);
@@ -356,7 +420,10 @@ public class MainWindow {
 		topNine.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("9");			}
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(8);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(topNine);
@@ -369,7 +436,10 @@ public class MainWindow {
 		topTen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("10");			}
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(9);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(topTen);
@@ -382,7 +452,10 @@ public class MainWindow {
 		topEleven.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("11");			}
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(10);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(topEleven);
@@ -395,7 +468,10 @@ public class MainWindow {
 		topTwelve.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("12");			}
+				engine.setCurrentButtonClickedRow(0);
+				engine.setCurrentButtonClickedCol(11);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(topTwelve);
@@ -408,7 +484,10 @@ public class MainWindow {
 		botOne.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("1");			}
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(0);
+				engine.makeTurn(bord);
+			}
 		});
 		frame.getContentPane().add(botOne);
 		botTwo = new JButton("");
@@ -419,7 +498,9 @@ public class MainWindow {
 		botTwo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("2");
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(1);
+				engine.makeTurn(bord);
 			}
 		});
 		frame.getContentPane().add(botTwo);
@@ -432,7 +513,10 @@ public class MainWindow {
 		botThree.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("3");			}
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(2);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(botThree);
@@ -445,9 +529,12 @@ public class MainWindow {
 		botFour.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("4");			}
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(3);
+				engine.makeTurn(bord);
+			}
 		});
-		
+
 		frame.getContentPane().add(botFour);
 
 		botFive = new JButton("");
@@ -458,7 +545,10 @@ public class MainWindow {
 		botFive.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("5");			}
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(4);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(botFive);
@@ -471,7 +561,10 @@ public class MainWindow {
 		botSix.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("6");			}
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(5);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(botSix);
@@ -484,7 +577,10 @@ public class MainWindow {
 		botSeven.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("7");			}
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(6);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(botSeven);
@@ -497,7 +593,10 @@ public class MainWindow {
 		botEight.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("8");			}
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(7);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(botEight);
@@ -510,7 +609,10 @@ public class MainWindow {
 		botNine.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("9");			}
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(8);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(botNine);
@@ -523,7 +625,10 @@ public class MainWindow {
 		botTen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("10");			}
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(9);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(botTen);
@@ -536,7 +641,10 @@ public class MainWindow {
 		botEleven.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("11");			}
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(10);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(botEleven);
@@ -549,86 +657,254 @@ public class MainWindow {
 		botTwelve.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("12");			}
+				engine.setCurrentButtonClickedRow(1);
+				engine.setCurrentButtonClickedCol(11);
+				engine.makeTurn(bord);
+			}
 		});
 
 		frame.getContentPane().add(botTwelve);
-		
-		
-		frame.setBounds(200, 200, 909, 730);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
+
+	public void setColorBotOne() {
+
+		botOne.setOpaque(true);
+		botOne.setContentAreaFilled(true);
+		botOne.setBackground(Color.green);
+	}
+	public void setColorBotTwo() {
+
+		botTwo.setOpaque(true);
+		botTwo.setContentAreaFilled(true);
+		botTwo.setBackground(Color.green);
+	}
+	public void setColorBotThree() {
+
+		botThree.setOpaque(true);
+		botThree.setContentAreaFilled(true);
+		botThree.setBackground(Color.green);
+	}
+	public void setColorBotFour() {
+
+		botFour.setOpaque(true);
+		botFour.setContentAreaFilled(true);
+		botFour.setBackground(Color.green);
+	}
+	public void setColorBotFive() {
+
+		botFive.setOpaque(true);
+		botFive.setContentAreaFilled(true);
+		botFive.setBackground(Color.green);
+	}
+	public void setColorBotSix() {
+
+		botSix.setOpaque(true);
+		botSix.setContentAreaFilled(true);
+		botSix.setBackground(Color.green);
+	}
+	public void setColorBotSeven() {
+
+		botSeven.setOpaque(true);
+		botSeven.setContentAreaFilled(true);
+		botSeven.setBackground(Color.green);
+	}
+	public void setColorBotEight() {
+
+		botEight.setOpaque(true);
+		botEight.setContentAreaFilled(true);
+		botEight.setBackground(Color.green);
+	}
+	public void setColorBotNine() {
+
+		botNine.setOpaque(true);
+		botNine.setContentAreaFilled(true);
+		botNine.setBackground(Color.green);
+	}
+	public void setColorBotTen() {
+
+		botTen.setOpaque(true);
+		botTen.setContentAreaFilled(true);
+		botTen.setBackground(Color.green);
+	}
+	public void setColorBotEleven() {
+
+		botEleven.setOpaque(true);
+		botEleven.setContentAreaFilled(true);
+		botEleven.setBackground(Color.green);
+	}
+	public void setColorBotTwelve() {
+
+		botTwelve.setOpaque(true);
+		botTwelve.setContentAreaFilled(true);
+		botTwelve.setBackground(Color.green);
+	}
+	public void setColorTopOne() {
+
+		topOne.setOpaque(true);
+		topOne.setContentAreaFilled(true);
+		topOne.setBackground(Color.green);
+	}
+	public void setColorTopTwo() {
+
+		topTwo.setOpaque(true);
+		topTwo.setContentAreaFilled(true);
+		topTwo.setBackground(Color.green);
+	}
+	public void setColorTopThree() {
+
+		topThree.setOpaque(true);
+		topThree.setContentAreaFilled(true);
+		topThree.setBackground(Color.green);
+	}
+	public void setColorTopFour() {
+
+		topFour.setOpaque(true);
+		topFour.setContentAreaFilled(true);
+		topFour.setBackground(Color.green);
+	}
+	public void setColorTopFive() {
+
+		topFive.setOpaque(true);
+		topFive.setContentAreaFilled(true);
+		topFive.setBackground(Color.green);
+	}
+	public void setColorTopSix() {
+
+		topSix.setOpaque(true);
+		topSix.setContentAreaFilled(true);
+		topSix.setBackground(Color.green);
+	}
+	public void setColorTopSeven() {
+
+		topSeven.setOpaque(true);
+		topSeven.setContentAreaFilled(true);
+		topSeven.setBackground(Color.green);
+	}
+	public void setColorTopEight() {
+
+		topEight.setOpaque(true);
+		topEight.setContentAreaFilled(true);
+		topEight.setBackground(Color.green);
+	}
+	public void setColorTopNine() {
+
+		topNine.setOpaque(true);
+		topNine.setContentAreaFilled(true);
+		topNine.setBackground(Color.green);
+	}
+	public void setColorTopTen() {
+
+		topTen.setOpaque(true);
+		topTen.setContentAreaFilled(true);
+		topTen.setBackground(Color.green);
+	}
+	public void setColorTopEleven() {
+
+		topEleven.setOpaque(true);
+		topEleven.setContentAreaFilled(true);
+		topEleven.setBackground(Color.green);
+	}
+	public void setColorTopTwelve() {
+
+		topTwelve.setOpaque(true);
+		topTwelve.setContentAreaFilled(true);
+		topTwelve.setBackground(Color.green);
+	}
+
 	public void setBotOne(Boolean type) {
 		botOne.setEnabled(type);
 	}
+
 	public void setBotTwo(Boolean type) {
 		botTwo.setEnabled(type);
 	}
+
 	public void setBotThree(Boolean type) {
 		botThree.setEnabled(type);
 	}
+
 	public void setBotFour(Boolean type) {
 		botFour.setEnabled(type);
 	}
+
 	public void setBotFive(Boolean type) {
 		botFive.setEnabled(type);
 	}
+
 	public void setBotSix(Boolean type) {
 		botSix.setEnabled(type);
 	}
+
 	public void setBotSeven(Boolean type) {
 		botSeven.setEnabled(type);
 	}
+
 	public void setBotEight(Boolean type) {
 		botEight.setEnabled(type);
 	}
+
 	public void setBotNine(Boolean type) {
 		botNine.setEnabled(type);
 	}
+
 	public void setBotTen(Boolean type) {
 		botTen.setEnabled(type);
 	}
+
 	public void setBotEleven(Boolean type) {
 		botEleven.setEnabled(type);
 	}
+
 	public void setBotTwelve(Boolean type) {
 		botTwelve.setEnabled(type);
 	}
-	
+
 	public void setTopOne(Boolean type) {
+
 		topOne.setEnabled(type);
 	}
+
 	public void setTopTwo(Boolean type) {
 		topTwo.setEnabled(type);
 	}
+
 	public void setTopThree(Boolean type) {
 		topThree.setEnabled(type);
 	}
+
 	public void setTopFour(Boolean type) {
 		topFour.setEnabled(type);
 	}
+
 	public void setTopFive(Boolean type) {
 		topFive.setEnabled(type);
 	}
+
 	public void setTopSix(Boolean type) {
 		topSix.setEnabled(type);
 	}
+
 	public void setTopSeven(Boolean type) {
 		topSeven.setEnabled(type);
 	}
+
 	public void setTopEight(Boolean type) {
 		topEight.setEnabled(type);
 	}
+
 	public void setTopNine(Boolean type) {
 		topNine.setEnabled(type);
 	}
+
 	public void setTopTen(Boolean type) {
 		topTen.setEnabled(type);
 	}
+
 	public void setTopEleven(Boolean type) {
 		topEleven.setEnabled(type);
 	}
+
 	public void setTopTwelve(Boolean type) {
 		topTwelve.setEnabled(type);
 	}
