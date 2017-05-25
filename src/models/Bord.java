@@ -165,13 +165,20 @@ public class Bord {
 		}
 
 	}
+	public void addPiece(int row , int col , int type){
+		if(type==WhitePiece){
+			this.pieces[row][col].add(new Piece(WhitePiece));
+		}else{
+			this.pieces[row][col].add(new Piece(BlackPiece));
+		}
+	}
 
 	private void fillColWithBlackPieces(int row, int col, int numberOfPieces) {
 		for (int i = 0; i < numberOfPieces; i++) {
 			this.pieces[row][col].add(new Piece(BlackPiece));
 		}
 	}
-
+	
 	private void fillColWithWhitePieces(int row, int col, int numberOfPieces) {
 		for (int i = 0; i < numberOfPieces; i++) {
 			this.pieces[row][col].add(new Piece(WhitePiece));

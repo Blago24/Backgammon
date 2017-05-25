@@ -292,9 +292,8 @@ public class MainWindow {
 		topOne.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(0);
-				engine.makeTurn(bord);
+				buttonClicked(0,0);
+				
 			}
 		});
 		frame.getContentPane().add(topOne);
@@ -307,9 +306,7 @@ public class MainWindow {
 		topTwo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(1);
-				engine.makeTurn(bord);
+				buttonClicked(0,1);
 			}
 		});
 		frame.getContentPane().add(topTwo);
@@ -323,9 +320,7 @@ public class MainWindow {
 		topThree.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(2);
-				engine.makeTurn(bord);
+				buttonClicked(0,2);
 			}
 		});
 
@@ -339,9 +334,7 @@ public class MainWindow {
 		topFour.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(3);
-				engine.makeTurn(bord);
+				buttonClicked(0,3);
 			}
 		});
 		topFour.setBounds(221, 0, 69, 255);
@@ -355,9 +348,7 @@ public class MainWindow {
 		topFive.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(4);
-				engine.makeTurn(bord);
+				buttonClicked(0,4);
 			}
 		});
 
@@ -371,9 +362,7 @@ public class MainWindow {
 		topSix.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(5);
-				engine.makeTurn(bord);
+				buttonClicked(0,5);
 				
 			}
 		});
@@ -388,9 +377,7 @@ public class MainWindow {
 		topSeven.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(6);
-				engine.makeTurn(bord);
+				buttonClicked(0,6);
 			}
 		});
 
@@ -404,9 +391,7 @@ public class MainWindow {
 		topEight.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(7);
-				engine.makeTurn(bord);
+				buttonClicked(0,7);
 			}
 		});
 
@@ -420,9 +405,7 @@ public class MainWindow {
 		topNine.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(8);
-				engine.makeTurn(bord);
+				buttonClicked(0,8);
 			}
 		});
 
@@ -436,9 +419,7 @@ public class MainWindow {
 		topTen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(9);
-				engine.makeTurn(bord);
+				buttonClicked(0,9);
 			}
 		});
 
@@ -452,9 +433,7 @@ public class MainWindow {
 		topEleven.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(10);
-				engine.makeTurn(bord);
+				buttonClicked(0,10);
 			}
 		});
 
@@ -468,9 +447,7 @@ public class MainWindow {
 		topTwelve.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(0);
-				engine.setCurrentButtonClickedCol(11);
-				engine.makeTurn(bord);
+				buttonClicked(0,11);
 			}
 		});
 
@@ -484,9 +461,7 @@ public class MainWindow {
 		botOne.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(0);
-				engine.makeTurn(bord);
+				buttonClicked(1,0);
 			}
 		});
 		frame.getContentPane().add(botOne);
@@ -498,9 +473,7 @@ public class MainWindow {
 		botTwo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(1);
-				engine.makeTurn(bord);
+				buttonClicked(1,1);
 			}
 		});
 		frame.getContentPane().add(botTwo);
@@ -513,9 +486,7 @@ public class MainWindow {
 		botThree.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(2);
-				engine.makeTurn(bord);
+				buttonClicked(1,2);
 			}
 		});
 
@@ -529,9 +500,7 @@ public class MainWindow {
 		botFour.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(3);
-				engine.makeTurn(bord);
+				buttonClicked(1,3);
 			}
 		});
 
@@ -545,9 +514,7 @@ public class MainWindow {
 		botFive.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(4);
-				engine.makeTurn(bord);
+				buttonClicked(1,4);
 			}
 		});
 
@@ -561,9 +528,7 @@ public class MainWindow {
 		botSix.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(5);
-				engine.makeTurn(bord);
+				buttonClicked(1,5);
 			}
 		});
 
@@ -577,9 +542,7 @@ public class MainWindow {
 		botSeven.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(6);
-				engine.makeTurn(bord);
+				buttonClicked(1,6);
 			}
 		});
 
@@ -593,9 +556,7 @@ public class MainWindow {
 		botEight.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(7);
-				engine.makeTurn(bord);
+				buttonClicked(1,7);
 			}
 		});
 
@@ -609,9 +570,7 @@ public class MainWindow {
 		botNine.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(8);
-				engine.makeTurn(bord);
+				buttonClicked(1,8);
 			}
 		});
 
@@ -625,9 +584,7 @@ public class MainWindow {
 		botTen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(9);
-				engine.makeTurn(bord);
+				buttonClicked(1,9);
 			}
 		});
 
@@ -641,9 +598,7 @@ public class MainWindow {
 		botEleven.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(10);
-				engine.makeTurn(bord);
+				buttonClicked(1,10);
 			}
 		});
 
@@ -657,16 +612,26 @@ public class MainWindow {
 		botTwelve.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.setCurrentButtonClickedRow(1);
-				engine.setCurrentButtonClickedCol(11);
-				engine.makeTurn(bord);
+				buttonClicked(1,11);
+				
 			}
 		});
 
 		frame.getContentPane().add(botTwelve);
 
 	}
-
+	
+	public void buttonClicked(int row, int col){
+		engine.setCurrentButtonClickedRow(row);
+		engine.setCurrentButtonClickedCol(col);
+		if(engine.isPieceIsMoveing()){
+			engine.movePiece(bord);
+			
+		}else{
+			engine.setPieceIsMoveing(true);
+			engine.makeTurn(bord);
+		}
+	}
 	public void setColorBotOne() {
 
 		botOne.setOpaque(true);

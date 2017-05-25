@@ -14,12 +14,19 @@ public class GameEngine {
 	boolean isWhiteTurn;
 	int currentButtonClickedRow;
 	int currentButtonClickedCol;
-
+	int oldRow;
+	int oldCol;
+	 boolean pieceIsMoveing;
 	public GameEngine() {
 		isWhiteTurn = false;
+		pieceIsMoveing=false;
 		currentButtonClickedCol = -1;
 		currentButtonClickedRow = -1;
+		oldRow=currentButtonClickedRow;
+		oldCol=currentButtonClickedCol;
 	}
+
+	
 
 	public void gameRunning(Bord bord) {
 
@@ -33,6 +40,8 @@ public class GameEngine {
 	}
 
 	public void makeTurn(Bord bord) {
+		setOldCol(getCurrentButtonClickedCol());
+		setOldRow(getCurrentButtonClickedRow());
 		stopAllButtons();
 		if (isWhiteTurn()) {
 			whitePlayerTurn(bord);
@@ -41,6 +50,30 @@ public class GameEngine {
 		}
 		
 	}
+
+	public int getOldRow() {
+		return oldRow;
+	}
+
+
+
+	public void setOldRow(int oldRow) {
+		this.oldRow = oldRow;
+	}
+
+
+
+	public int getOldCol() {
+		return oldCol;
+	}
+
+
+
+	public void setOldCol(int oldCol) {
+		this.oldCol = oldCol;
+	}
+
+
 
 	private void blackPlayerTurn(Bord bord) {
 
@@ -443,6 +476,27 @@ public class GameEngine {
 
 	public void setSecondDice(int secondDice) {
 		this.secondDice = secondDice;
+	}
+	public boolean isPieceIsMoveing() {
+		return pieceIsMoveing;
+	}
+
+	public void setPieceIsMoveing(boolean pieceIsMoveing) {
+		this.pieceIsMoveing = pieceIsMoveing;
+	}
+
+
+
+	public void movePiece(Bord bord) {
+		bord.removeOnePiece(getOldRow(),getOldCol());
+		if(isWhiteTurn()){
+			bord.addPiece(getCurrentButtonClickedRow(),getCurrentButtonClickedCol(),Bord.WhitePiece);
+		}else{
+			bord.addPiece(getCurrentButtonClickedRow(),getCurrentButtonClickedCol(),Bord.BlackPiece);
+		}
+		setPieceIsMoveing(false);
+		gameRunning(bord);
+		
 	}
 
 }
