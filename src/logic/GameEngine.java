@@ -14,19 +14,30 @@ public class GameEngine {
 	boolean isWhiteTurn;
 	int currentButtonClickedRow;
 	int currentButtonClickedCol;
+	int takenWhite;
+	int takenBlack;
 	int oldRow;
 	int oldCol;
-	 boolean pieceIsMoveing;
+	boolean pieceIsMoveing;
+	boolean checkForPosiblePositions;
+
 	public GameEngine() {
+		firstDice = 0;
+		secondDice = 0;
+		takenBlack = 0;
+		takenWhite = 0;
+		// first is White , but at the beginning we have to set the boolean
+		// isWhiteTurn = false;
+		// and when is clicked the trow dice btn isWhiteTurn changes to opposite
+		// type
 		isWhiteTurn = false;
-		pieceIsMoveing=false;
+		pieceIsMoveing = false;
+		checkForPosiblePositions = false;
 		currentButtonClickedCol = -1;
 		currentButtonClickedRow = -1;
-		oldRow=currentButtonClickedRow;
-		oldCol=currentButtonClickedCol;
+		oldRow = currentButtonClickedRow;
+		oldCol = currentButtonClickedCol;
 	}
-
-	
 
 	public void gameRunning(Bord bord) {
 
@@ -34,8 +45,19 @@ public class GameEngine {
 
 		bord.showBord(this.window);
 		setTheClickablePieces(bord);
-		showDiceButton();
+		checkTheDice();
 		
+
+	}
+
+	private void checkTheDice() {
+		if (firstDice == 0 && secondDice == 0) {
+			showDiceButton();
+			// setWhiteTurn(!isWhiteTurn());
+		} else {
+			hideDiceButton();
+
+		}
 
 	}
 
@@ -43,92 +65,140 @@ public class GameEngine {
 		setOldCol(getCurrentButtonClickedCol());
 		setOldRow(getCurrentButtonClickedRow());
 		stopAllButtons();
-		if (isWhiteTurn()) {
+		if (isWhiteTurn() && getTakenWhite() == 0) {
 			whitePlayerTurn(bord);
-		} else {
+		} else if (!isWhiteTurn() && getTakenBlack() == 0) {
 			blackPlayerTurn(bord);
 		}
+
+	}
+
+	public void putTakenPieces(Bord bord) {
 		
+		if (isWhiteTurn() && getTakenWhite() != 0) {
+			stopAllButtons();
+			putTakenWhite(bord);
+			
+			//gameRunning(bord);
+		}
+		if (!isWhiteTurn() && getTakenBlack() != 0) {
+			stopAllButtons();
+			putTakenBlack(bord);
+			
+			//gameRunning(bord);
+		}
+	}
+
+	private void putTakenBlack(Bord bord) {
+
+		paintingThePosiblePosition(bord, Bord.BotRow, Bord.bordCols - firstDice);
+		paintingThePosiblePosition(bord, Bord.BotRow, Bord.bordCols - secondDice);
+
+		setTakenBlack(getTakenBlack() - 1);
+		removeTheUsedDicePutOnBord();
+		
+		// bord.showBord(this.window);
+	}
+
+	private void putTakenWhite(Bord bord) {
+		paintingThePosiblePosition(bord, Bord.TopRow, Bord.bordCols - firstDice);
+		paintingThePosiblePosition(bord, Bord.TopRow, Bord.bordCols - secondDice);
+		setTakenWhite(getTakenWhite() - 1);
+		removeTheUsedDicePutOnBord();
+		
+		// bord.showBord(this.window);
 	}
 
 	public int getOldRow() {
 		return oldRow;
 	}
 
-
-
 	public void setOldRow(int oldRow) {
 		this.oldRow = oldRow;
 	}
-
-
 
 	public int getOldCol() {
 		return oldCol;
 	}
 
-
-
 	public void setOldCol(int oldCol) {
 		this.oldCol = oldCol;
 	}
 
-
-
 	private void blackPlayerTurn(Bord bord) {
 
 		if (getCurrentButtonClickedRow() == 1) {
-			if (getCurrentButtonClickedCol() - firstDice < 0) {
-				paintingThePosiblePosition(bord, Bord.TopRow, firstDice - getCurrentButtonClickedCol() - 1);
+			if (firstDice != 0) {
+				if (getCurrentButtonClickedCol() - firstDice < 0) {
+					paintingThePosiblePosition(bord, Bord.TopRow, firstDice - getCurrentButtonClickedCol() - 1);
 
-			} else {
-				paintingThePosiblePosition(bord, Bord.BotRow, getCurrentButtonClickedCol() - firstDice);
+				} else {
+					paintingThePosiblePosition(bord, Bord.BotRow, getCurrentButtonClickedCol() - firstDice);
+				}
 			}
-			if (getCurrentButtonClickedCol() - secondDice < 0) {
-				paintingThePosiblePosition(bord, Bord.TopRow, secondDice - getCurrentButtonClickedCol() - 1);
+			if (secondDice != 0) {
+				if (getCurrentButtonClickedCol() - secondDice < 0) {
+					paintingThePosiblePosition(bord, Bord.TopRow, secondDice - getCurrentButtonClickedCol() - 1);
 
-			} else {
-				paintingThePosiblePosition(bord, Bord.BotRow, getCurrentButtonClickedCol() - secondDice);
+				} else {
+					paintingThePosiblePosition(bord, Bord.BotRow, getCurrentButtonClickedCol() - secondDice);
 
+				}
 			}
+
 		} else if (getCurrentButtonClickedRow() == 0) {
-			if (getCurrentButtonClickedCol() + firstDice <= 11) {
+			if (firstDice != 0) {
+				if (getCurrentButtonClickedCol() + firstDice <= 11) {
 
-				paintingThePosiblePosition(bord, Bord.TopRow, getCurrentButtonClickedCol() + firstDice);
+					paintingThePosiblePosition(bord, Bord.TopRow, getCurrentButtonClickedCol() + firstDice);
+				}
 			}
-			if (getCurrentButtonClickedCol() + secondDice <= 11) {
+			if (secondDice != 0) {
+				if (getCurrentButtonClickedCol() + secondDice <= 11) {
 
-				paintingThePosiblePosition(bord, Bord.TopRow, getCurrentButtonClickedCol() + secondDice);
+					paintingThePosiblePosition(bord, Bord.TopRow, getCurrentButtonClickedCol() + secondDice);
+				}
 			}
+
 		}
 
 	}
 
 	private void whitePlayerTurn(Bord bord) {
+
 		if (getCurrentButtonClickedRow() == 0) {
-			if (getCurrentButtonClickedCol() - firstDice < 0) {
-				paintingThePosiblePosition(bord, Bord.BotRow, firstDice - getCurrentButtonClickedCol() - 1);
+			if (firstDice != 0) {
+				if (getCurrentButtonClickedCol() - firstDice < 0) {
+					paintingThePosiblePosition(bord, Bord.BotRow, firstDice - getCurrentButtonClickedCol() - 1);
 
-			} else {
-				paintingThePosiblePosition(bord, Bord.TopRow, getCurrentButtonClickedCol() - firstDice);
+				} else {
+					paintingThePosiblePosition(bord, Bord.TopRow, getCurrentButtonClickedCol() - firstDice);
+				}
 			}
-			if (getCurrentButtonClickedCol() - secondDice < 0) {
-				paintingThePosiblePosition(bord, Bord.BotRow, secondDice - getCurrentButtonClickedCol() - 1);
+			if (secondDice != 0) {
+				if (getCurrentButtonClickedCol() - secondDice < 0) {
+					paintingThePosiblePosition(bord, Bord.BotRow, secondDice - getCurrentButtonClickedCol() - 1);
 
-			} else {
+				} else {
 
-				paintingThePosiblePosition(bord, Bord.TopRow, getCurrentButtonClickedCol() - secondDice);
-
+					paintingThePosiblePosition(bord, Bord.TopRow, getCurrentButtonClickedCol() - secondDice);
+				}
 			}
+
 		} else if (getCurrentButtonClickedRow() == 1) {
-			if (getCurrentButtonClickedCol() + firstDice <= 11) {
+			if (firstDice != 0) {
+				if (getCurrentButtonClickedCol() + firstDice <= 11) {
 
-				paintingThePosiblePosition(bord, Bord.BotRow, getCurrentButtonClickedCol() + firstDice);
+					paintingThePosiblePosition(bord, Bord.BotRow, getCurrentButtonClickedCol() + firstDice);
+				}
 			}
-			if (getCurrentButtonClickedCol() - secondDice <= 11) {
+			if (secondDice != 0) {
+				if (getCurrentButtonClickedCol() + secondDice <= 11) {
 
-				paintingThePosiblePosition(bord, Bord.BotRow, getCurrentButtonClickedCol() + secondDice);
+					paintingThePosiblePosition(bord, Bord.BotRow, getCurrentButtonClickedCol() + secondDice);
+				}
 			}
+
 		}
 	}
 
@@ -137,50 +207,58 @@ public class GameEngine {
 			if (bord.checkTheNumberOfPiecesOnCurrentPosition(row, col) > 0) {
 				if (bord.checkIfTheColorOfPiecesOnCurrentPositionIsWhite(row, col)) {
 					ColorThePossibleNewPosition(row, col);
-					setClickablePosiblePositions(row,col);
+					setClickablePosiblePositions(row, col);
+					setCheckForPosiblePositions(true);
 				} else if (!bord.checkIfTheColorOfPiecesOnCurrentPositionIsWhite(row, col)) {
 					if (bord.checkTheNumberOfPiecesOnCurrentPosition(row, col) <= 1) {
 						ColorThePossibleNewPosition(row, col);
-						setClickablePosiblePositions(row,col);
+						setClickablePosiblePositions(row, col);
+						setCheckForPosiblePositions(true);
 					}
 				}
-			}else{
+			} else {
 				ColorThePossibleNewPosition(row, col);
-				setClickablePosiblePositions(row,col);
+				setClickablePosiblePositions(row, col);
+				setCheckForPosiblePositions(true);
 			}
 		} else {
 			if (bord.checkTheNumberOfPiecesOnCurrentPosition(row, col) > 0) {
 				if (!bord.checkIfTheColorOfPiecesOnCurrentPositionIsWhite(row, col)) {
 					ColorThePossibleNewPosition(row, col);
-					setClickablePosiblePositions(row,col);
+					setClickablePosiblePositions(row, col);
+					setCheckForPosiblePositions(true);
 				} else if (bord.checkIfTheColorOfPiecesOnCurrentPositionIsWhite(row, col)) {
 					if (bord.checkTheNumberOfPiecesOnCurrentPosition(row, col) <= 1) {
 						ColorThePossibleNewPosition(row, col);
-						setClickablePosiblePositions(row,col);
+						setClickablePosiblePositions(row, col);
+						setCheckForPosiblePositions(true);
 					}
 				}
-			}else{
+			} else {
 				ColorThePossibleNewPosition(row, col);
-				setClickablePosiblePositions(row,col);
+				setClickablePosiblePositions(row, col);
+				setCheckForPosiblePositions(true);
 			}
 		}
 	}
-	private void stopAllButtons(){
+
+	private void stopAllButtons() {
 		for (int row = 0; row < Bord.bordRows; row++) {
 			for (int col = 0; col < Bord.bordCols; col++) {
-				if(row==0){
-					setTopButtonsClickable(col,false);
-				}else{
-					setBotButtonsClickable(col,false);
+				if (row == 0) {
+					setTopButtonsClickable(col, false);
+				} else {
+					setBotButtonsClickable(col, false);
 				}
 			}
 		}
 	}
+
 	private void setClickablePosiblePositions(int row, int col) {
-		
-		if(row==0){
+
+		if (row == 0) {
 			setTopButtonsClickable(col, true);
-		}else{
+		} else {
 			setBotButtonsClickable(col, true);
 		}
 	}
@@ -296,9 +374,14 @@ public class GameEngine {
 
 	}
 
-	private void hideDiceButton() {
+	public void hideDiceButton() {
 		window.setDice(false);
-
+		if (firstDice != 0) {
+			window.setFirstDiceText(firstDice);
+		}
+		if (secondDice != 0) {
+			window.setSecondDiceText(secondDice);
+		}
 	}
 
 	public void setWindow(MainWindow window) {
@@ -477,6 +560,7 @@ public class GameEngine {
 	public void setSecondDice(int secondDice) {
 		this.secondDice = secondDice;
 	}
+
 	public boolean isPieceIsMoveing() {
 		return pieceIsMoveing;
 	}
@@ -485,18 +569,97 @@ public class GameEngine {
 		this.pieceIsMoveing = pieceIsMoveing;
 	}
 
-
-
 	public void movePiece(Bord bord) {
-		bord.removeOnePiece(getOldRow(),getOldCol());
-		if(isWhiteTurn()){
-			bord.addPiece(getCurrentButtonClickedRow(),getCurrentButtonClickedCol(),Bord.WhitePiece);
-		}else{
-			bord.addPiece(getCurrentButtonClickedRow(),getCurrentButtonClickedCol(),Bord.BlackPiece);
+		bord.removeOnePiece(getOldRow(), getOldCol());
+		if (isWhiteTurn()) {
+			if (bord.checkTheNumberOfPiecesOnCurrentPosition(getCurrentButtonClickedRow(),
+					getCurrentButtonClickedCol()) > 0) {
+				if (!bord.checkIfTheColorOfPiecesOnCurrentPositionIsWhite(getCurrentButtonClickedRow(),
+						getCurrentButtonClickedCol())) {
+					bord.removeOnePiece(getCurrentButtonClickedRow(), getCurrentButtonClickedCol());
+					setTakenBlack(getTakenBlack() + 1);
+				}
+
+			}
+			bord.addPiece(getCurrentButtonClickedRow(), getCurrentButtonClickedCol(), Bord.WhitePiece);
+			removeTheUsedDiceMove();
+			bord.showBord(this.window);
+		} else {
+			if (bord.checkTheNumberOfPiecesOnCurrentPosition(getCurrentButtonClickedRow(),
+					getCurrentButtonClickedCol()) > 0) {
+				if (bord.checkTheNumberOfPiecesOnCurrentPosition(getCurrentButtonClickedRow(),
+						getCurrentButtonClickedCol()) > 0) {
+					if (bord.checkIfTheColorOfPiecesOnCurrentPositionIsWhite(getCurrentButtonClickedRow(),
+							getCurrentButtonClickedCol())) {
+						bord.removeOnePiece(getCurrentButtonClickedRow(), getCurrentButtonClickedCol());
+						setTakenWhite(getTakenWhite() + 1);
+					}
+
+				}
+			}
+			bord.addPiece(getCurrentButtonClickedRow(), getCurrentButtonClickedCol(), Bord.BlackPiece);
+			removeTheUsedDiceMove();
+			bord.showBord(this.window);
 		}
 		setPieceIsMoveing(false);
 		gameRunning(bord);
-		
+
+	}
+
+	private void removeTheUsedDiceMove() {
+		if (getOldRow() == getCurrentButtonClickedRow()) {
+			if (Math.abs(getOldCol() - getCurrentButtonClickedCol()) == firstDice) {
+				setFirstDice(0);
+			}
+			if (Math.abs(getOldCol() - getCurrentButtonClickedCol()) == secondDice) {
+				setSecondDice(0);
+			}
+		} else {
+
+			if (getCurrentButtonClickedCol() + getOldCol() + 1 == firstDice) {
+				setFirstDice(0);
+			}
+			if (getCurrentButtonClickedCol() + getOldCol() + 1 == secondDice) {
+				setSecondDice(0);
+			}
+
+		}
+
+	}
+
+	private void removeTheUsedDicePutOnBord() {
+System.out.println("dadaadadhadkajdaldna-  "+getCurrentButtonClickedCol());
+		if (Bord.bordCols - getCurrentButtonClickedCol()-1 == firstDice) {
+			setFirstDice(0);
+		}
+		if (Bord.bordCols - getCurrentButtonClickedCol()-1 == secondDice) {
+			setSecondDice(0);
+		}
+
+	}
+
+	public boolean isCheckForPosiblePositions() {
+		return checkForPosiblePositions;
+	}
+
+	public void setCheckForPosiblePositions(boolean checkForPosiblePositions) {
+		this.checkForPosiblePositions = checkForPosiblePositions;
+	}
+
+	public int getTakenWhite() {
+		return takenWhite;
+	}
+
+	public void setTakenWhite(int takenWhite) {
+		this.takenWhite = takenWhite;
+	}
+
+	public int getTakenBlack() {
+		return takenBlack;
+	}
+
+	public void setTakenBlack(int takenBlack) {
+		this.takenBlack = takenBlack;
 	}
 
 }

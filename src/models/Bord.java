@@ -139,12 +139,12 @@ public class Bord {
 	private int numberOfPiecesInCurrentCol(int col) {
 		switch (col) {
 		case 11:
-			return 2;
+			return 1;
 		case 4:
 			return 3;
 		case 0:
 		case 6:
-			return 11;
+			return 5;
 
 		}
 		return -1;
