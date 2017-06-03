@@ -244,7 +244,7 @@ public class MainWindow {
 		background.setText("");
 		background.setBounds(0, 0, 910, 690);
 
-		 //frame.getContentPane().add(background);
+		// frame.getContentPane().add(background);
 		setAllButtons();
 
 		frame.setBounds(200, 200, 909, 730);
@@ -269,6 +269,7 @@ public class MainWindow {
 					engine.setWhiteTurn(!engine.isWhiteTurn());
 					engine.gameRunning(bord);
 				}
+
 				int points = engine.trowDice();
 				engine.setFirstDice(points);
 				firstDice.setText(points + "");
@@ -276,7 +277,7 @@ public class MainWindow {
 				engine.setSecondDice(points);
 				secondDice.setText(points + "");
 				engine.hideDiceButton();
-				//engine.putTakenPieces(bord);
+				engine.putTakenPieces(bord);
 
 			}
 		});
@@ -624,21 +625,21 @@ public class MainWindow {
 		});
 
 		frame.getContentPane().add(botTwelve);
-		
+
 		whiteField = new JTextField();
 		whiteField.setEditable(false);
 		whiteField.setBounds(434, 343, 29, 20);
 		frame.getContentPane().add(whiteField);
 		whiteField.setColumns(10);
-		whiteField.setText(engine.getTakenWhite()+"");
-		
+		whiteField.setText(engine.getTakenWhite() + "");
+
 		blackField = new JTextField();
 		blackField.setBackground(Color.GRAY);
 		blackField.setEditable(false);
 		blackField.setColumns(10);
 		blackField.setBounds(434, 364, 29, 20);
 		frame.getContentPane().add(blackField);
-		blackField.setText(engine.getTakenBlack()+"");
+		blackField.setText(engine.getTakenBlack() + "");
 
 	}
 
@@ -646,19 +647,25 @@ public class MainWindow {
 		engine.setCurrentButtonClickedRow(row);
 		engine.setCurrentButtonClickedCol(col);
 		System.out.println("ismoving=" + engine.isPieceIsMoveing());
-		if (engine.isPieceIsMoveing()) {
-			engine.movePiece(bord);
+		if (!engine.putTakenPieces(bord)) {
+			if (engine.isPieceIsMoveing()) {
+				engine.movePiece(bord);
 
-		} else {
-
-			engine.makeTurn(bord);
-			if (!engine.isCheckForPosiblePositions()) {
-				engine.gameRunning(bord);
 			} else {
-				engine.setPieceIsMoveing(true);
-				engine.setCheckForPosiblePositions(false);
+				engine.makeTurn(bord);
+
 			}
+		}else{
+			engine.gameRunning(bord);
 		}
+		if (!engine.isCheckForPosiblePositions()) {
+			engine.gameRunning(bord);
+		} else {
+			engine.setPieceIsMoveing(true);
+			engine.setCheckForPosiblePositions(false);
+		}
+		
+
 	}
 
 	public void setColorBotOne() {
